@@ -53,10 +53,10 @@ var pushConfigRetry = 0;
 var push = null;
 var AppDetails = {
     name: 'rv-eye-app',
-    code: 29,
-    supportCode: 31,
+    code: 39,
+    supportCode: 39,
     appId: '',
-    appleId: '1455976177',
+    appleId: '1480356729',
 };
 
 if( navigator.userAgent.match(/Windows/i) ){    
@@ -897,7 +897,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-gsm').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG44+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG44+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG46+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -905,7 +905,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-gps').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG45+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG45+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG46+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -913,7 +913,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-power').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG28+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG28+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG29+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -921,7 +921,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-geofence').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG24+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG24+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG43+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -929,7 +929,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-speed').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG02+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG02+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG47+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -937,7 +937,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-address').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG48+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG48+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG49+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -945,7 +945,7 @@ App.onPageInit('asset.status', function (page) {
     $$(page.container).find('.open-mileage').on('click', function () {
         clickedLink = this;            
         popoverHTML = '<div class="popover popover-status">'+                      
-                      '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG10+'</p>'+
+                      '<p class="">'+LANGUAGE.ASSET_STATUS_MSG10+'</p>'+
                       '<p>'+LANGUAGE.ASSET_STATUS_MSG50+'</p>'+                       
                 '</div>';
         App.popover(popoverHTML, clickedLink);            
@@ -955,7 +955,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-direction').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG01+' - '+Direction.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG01+' - '+Direction.text()+'</p>'+
                           '<p>'+LANGUAGE.ASSET_STATUS_MSG37+'</p>'+                       
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
@@ -966,7 +966,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-voltage').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG06+' - '+Voltage.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG06+' - '+Voltage.text()+'</p>'+
                           '<p>'+LANGUAGE.ASSET_STATUS_MSG33+'</p>'+                       
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
@@ -976,7 +976,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-fuel').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG12+' - '+Fuel.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG12+' - '+Fuel.text()+'</p>'+
                           '<p>'+LANGUAGE.ASSET_STATUS_MSG40+'</p>'+                       
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
@@ -986,7 +986,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-battery').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG11+' - '+Battery.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG11+' - '+Battery.text()+'</p>'+
                           '<p>'+LANGUAGE.ASSET_STATUS_MSG32+'</p>'+                       
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
@@ -996,7 +996,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-temperature').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG15+' - '+Temperature.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG15+' - '+Temperature.text()+'</p>'+
                           /*'<p>'+LANGUAGE.ASSET_STATUS_MSG32+'</p>'+        */               
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
@@ -1007,7 +1007,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-engineHours').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG38+' - '+EngineHours.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG38+' - '+EngineHours.text()+'</p>'+
                           /*'<p>'+LANGUAGE.ASSET_STATUS_MSG33+'</p>'+         */              
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
@@ -1017,7 +1017,7 @@ App.onPageInit('asset.status', function (page) {
         $$(page.container).find('.open-stoppedDuration').on('click', function () {
             clickedLink = this;            
             popoverHTML = '<div class="popover popover-status">'+                      
-                          '<p class="color-boatwatch">'+LANGUAGE.ASSET_STATUS_MSG39+' - '+StoppedDuration.text()+'</p>'+
+                          '<p class="">'+LANGUAGE.ASSET_STATUS_MSG39+' - '+StoppedDuration.text()+'</p>'+
                           /*'<p>'+LANGUAGE.ASSET_STATUS_MSG37+'</p>'+   */                    
                     '</div>';
             App.popover(popoverHTML, clickedLink);            
