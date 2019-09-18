@@ -1,51 +1,55 @@
-<div class="page  " data-page="alarms.assets">
-	<div class="navbar bg-boatwatch ">
+<div class="navbar bg-boatwatch no-border">
         <div class="navbar-inner">
             <div class="left">
-            	<a href="#" class="link back "> <i class="icon icon-header-arrow-back" ></i></a>
+                <a href="#" class="link back "> <i class="f7-icons" >chevron_left</i></a>
             </div>
-            <div class="left navbar_title navbar_title_index">{{@global.LANGUAGE.ALARM_MSG06}}</div>
-            <div class="right">                   	
-                <a href="#" class="link saveAssets"><i class="icon icon-header-apply"></i></a>
+            <div class="center sliding  ">{{@global.LANGUAGE.ALARM_MSG06}}</div>
+            <div class="right sliding">                     
+                <a href="#" class="link saveAssets"><i class="f7-icons icon-header-apply"></i></a>
             </div>
         </div>
         
     </div>
 
-  
-    <form class="searchbar searchbarAlarmsAssets" >
-        <div class="searchbar-input">
-            <input type="search" placeholder="{{@global.LANGUAGE.COM_MSG06}}">
-            <a href="#" class="searchbar-clear"></a>
-        </div>
-        <a href="#" class="searchbar-cancel">{{@global.LANGUAGE.COM_MSG04}}</a>
-    </form>
-       
-	
-    <div class="searchbar-overlay"></div>
+<div class="pages">
+    <div class="page  " data-page="alarms.assets">
+    	
 
-    <div class="page-content">
-        <div class="list-block no-hairlines list-block-selectall">
-            <li class="bw-li-switch">
-                <div class="item-content">                               
-                    <div class="item-inner">
-                        <div class="item-title">{{@global.LANGUAGE.COM_MSG30}}</div>                        
-                        <label class="label-switch">
-                            <input type="checkbox" name="select-all" >
-                            <div class="checkbox"></div>
-                        </label>                        
+      
+        <form class="searchbar searchbarAlarmsAssets" >
+            <div class="searchbar-input">
+                <input type="search" placeholder="{{@global.LANGUAGE.COM_MSG06}}">
+                <a href="#" class="searchbar-clear"></a>
+            </div>
+            <a href="#" class="searchbar-cancel">{{@global.LANGUAGE.COM_MSG04}}</a>
+        </form>
+           
+    	
+        <div class="searchbar-overlay"></div>
+
+        <div class="page-content">
+            <div class="list-block no-hairlines list-block-selectall">
+                <li class="bw-li-switch">
+                    <div class="item-content">                               
+                        <div class="item-inner">
+                            <div class="item-title">{{@global.LANGUAGE.COM_MSG30}}</div>                        
+                            <label class="label-switch">
+                                <input type="checkbox" name="select-all" >
+                                <div class="checkbox"></div>
+                            </label>                        
+                        </div>
                     </div>
-                </div>
-            </li>
-        </div>
+                </li>
+            </div>
 
-		<div class="content-block alarms-assets-search-nothing-found searchbar-not-found">                               
-            {{@global.LANGUAGE.COM_MSG05}}
-        </div>        
-        <div class="list-block media-list virtual-list list-block-search-alarms-assets alarmsAssetList">          
+    		<div class="content-block alarms-assets-search-nothing-found searchbar-not-found">                               
+                {{@global.LANGUAGE.COM_MSG05}}
+            </div>        
+            <div class="list-block media-list virtual-list list-block-search-alarms-assets alarmsAssetList">          
+                
+            </div>
             
         </div>
-        
-    </div>
 
+    </div>
 </div>

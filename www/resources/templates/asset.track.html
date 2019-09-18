@@ -1,117 +1,140 @@
-<div class="page no-swipeback track_page" data-page="asset.track">
-	<div class="navbar bg-boatwatch  ">
-        <div class="navbar-inner">
-            <div class="left">
-            	<a href="#" class="link backToIndex "> <i class="icon icon-header-arrow-back" ></i></a>
-            </div>
-            <div class="left navbar_title">{{Name}}</div>
-           	<div class="right">
-           		<a href="#" class="link refreshTrack"><i class="icon icon-header-refresh"></i></a>
-           	</div>
+<div class="navbar bg-boatwatch  no-border">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="link backToIndex "> <i class="f7-icons" >chevron_left</i></a>
         </div>
-    </div>
-
-    <div class="toolbar tabbar bg-boatwatch  bw_top_shadow">
-        <div class="toolbar-inner">
-            <a href="#" class="tab-link " data-id="asset.status" data-href="">
-                <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG07}}</b></span>
-            </a>
-            <a href="#" class="tab-link" data-id="asset.alarm" data-href="">
-                <span class="tabbar-label"><b>{{@global.LANGUAGE.ALARM_MSG01}}</b></span>
-            </a>
-            <a href="#" class="tab-link" data-id="asset.playback" data-href="">
-                <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG08}}</b></span>
-            </a>
-            <a href="#" class="tab-link active" data-id="asset.track" data-href="">
-                <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG09}}</b></span>
-            </a>
-
-            
+        <div class="center sliding ">{{Name}}</div>
+        <div class="right sliding">
+            <a href="#" class="link refreshTrack"><i class="f7-icons icon-header-refresh"></i></a>
         </div>
-    </div>
-
-    <div class="page-content">
-
-    	<div class="position_map "> 
-            <div class="float_button_wrapper pano_button_wrapper bg-darkgrey">
-                <a href="#" class="link color-white pano_button" data-lat="{{Lat}}" data-lng="{{Lng}}">
-                    <i class="pano_preview_img"></i>                                   
+        <div class="subnavbar">
+            <div class="buttons-row">
+                <a href="#" class="button tab-link " data-id="asset.status" data-href="">
+                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG07}}</b></span>
+                </a>
+                <a href="#" class="button tab-link" data-id="asset.alarm" data-href="">
+                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ALARM_MSG01}}</b></span>
+                </a>
+                <a href="#" class="button tab-link" data-id="asset.playback" data-href="">
+                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG08}}</b></span>
+                </a>
+                <a href="#" class="button tab-link active" data-id="asset.track" data-href="">
+                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG09}}</b></span>
                 </a>
             </div>
-            <div class="float_button_wrapper route_button_wrapper bg-darkgrey">
+        </div>
+    </div>
+</div>
+
+<div class="pages">
+    <div class="page with-subnavbar no-swipeback track_page" data-page="asset.track">
+    	
+
+       
+
+        <div class="page-content">
+
+        	<div class="position_map "> 
+                <div class="float_button_wrapper pano_button_wrapper bg-darkgrey">
+                    <a href="#" class="link color-white pano_button" data-lat="{{Lat}}" data-lng="{{Lng}}">
+                        <i class="pano_preview_img"></i>                                   
+                    </a>
+                </div>
+                <div class="float_button_wrapper route_button_wrapper bg-darkgrey">
                 <a href="#" class="link color-white routeButton" data-lat="{{Lat}}" data-lng="{{Lng}}" >
                     <i class="f7-icons icon-other-route color-white"></i>
                     <span>{{@global.LANGUAGE.ASSET_TRACK_MSG17}}</span>                    
                 </a>
             </div>
-            <div class="map" id="map"></div>
-    	</div>
-        <div class="position_bottom">
-            <div class="list-block no-hairlines no-hairlines-between m-0 geofenceSetList">
-                <ul class="row no-gutter">
-                    <li class="col-33 color-gray width-auto">
-                        <label class="label-radio item-content ">                                   
-                            <input type="radio" name="Geofence" value="false"  {{#unless Geofence}}checked="checked"{{/unless}}>
-                            <div class="item-media">
-                                <i class="icon icon-form-radio"></i>
-                            </div> 
-                            <div class="item-inner">
-                                <div class="item-title">{{@global.LANGUAGE.COM_MSG39}}</div>
-                            </div>                                
-                        </label>
-                    </li>  
-                    <li class="col-33  width-auto">
-                        <div class="item-content pl-0">
-                            <div class="item-inner pr-0">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_TRACK_MSG16}}</div>            
-                            </div>
-                        </div>
-                    </li>                              
-                    <li class="col-33 color-red width-auto">
-                        <label class="label-radio item-content flex-direction-reverse">
-                            <input type="radio" name="Geofence" value="true"  {{#if Geofence}}checked="checked"{{/if}}>
-                            <div class="item-media">
-                                <i class="icon icon-form-radio"></i>
-                            </div>  
-                            <div class="item-inner justify-content-flex-end">
-                                <div class="item-title">{{@global.LANGUAGE.COM_MSG40}}</div>
-                            </div>   
-                            
-
-                        </label>
-                    </li>       
-
-                </ul>
-        </div>
-        <!-- <div class="position_bottom">            
-            <div class="row no-gutter">                
-                <div class="col-33">
-                    <img src="resources/images/svg_date.svg" alt="">
-                    <p>{{@global.LANGUAGE.ASSET_TRACK_MSG00}}</p>  
-                    <p class="position_data position_time">{{Time}}</p>
-                </div>               
-                <div class="col-33 ">
-                    <img src="resources/images/svg_mileage.svg" alt="">
-                    <p >{{@global.LANGUAGE.ASSET_TRACK_MSG03}}</p>  
-                    <p class="position_data position_mileage">{{Mileage}}</p>
+                <div class="map" id="map"></div>
+        	</div>
+            <div class="position_bottom">
+                <div class="list-block no-hairlines no-hairlines-between m-0 fs-15 geofenceSetList">
+                    <ul class="row no-gutter">
+                        <li class="col-33 color-gray width-auto">
+                            <div class="item-content">
+                                <div class="item-inner no-fastclick">
+                                    <input type="radio" name='Geofence' value="false" {{#unless Geofence}}checked="checked"{{/unless}}>
+                                    <div class="item-title pl-15">{{@global.LANGUAGE.COM_MSG39}}</div>
+                                </div>
+                            </div>                                   
+                        </li>
+                        <li class="col-33 color-black width-auto">
+                            <div class="item-content pl-0">
+                                <div class="item-inner pr-0">
+                                    <div class="item-title ">{{@global.LANGUAGE.ASSET_TRACK_MSG16}}</div>            
+                                </div>
+                            </div>                                 
+                        </li>
+                        <li class="col-33 color-red width-auto">
+                            <div class="item-content ">
+                                <div class="item-inner no-fastclick">
+                                    <div class="item-title pr-15">{{@global.LANGUAGE.COM_MSG40}}</div>
+                                    <input type="radio" name='Geofence' value="true" {{#if Geofence}}checked="checked"{{/if}}>
+                                </div>
+                            </div>                                   
+                        </li>
+                        
+                    </ul>
                 </div>
-                <div class="col-33">
-                    <img src="resources/images/svg_speed.svg" alt="">
-                    <p>{{@global.LANGUAGE.ASSET_TRACK_MSG02}}</p>  
-                    <p class="position_data position_speed">{{Speed}}</p>
-                </div>
-            </div>  
-            <div class="divider"></div>  
-            <div class="row no-gutter"> 
-                <div class="col-100 address ">                   
-                    <div class="position_bottom_img_right">
-                        <p class="display_address">{{Address}}</p>
-                        <div class="item-subtext position_latlng">{{Coords}}</div>  
+                <!-- <div class="row no-gutter">
+                    <div class="col-33 width-auto color-green ">
+                        <label for="GeofenceOff">
+                            <input id="GeofenceOff"   name='Geofence' placeholder='Radio' value="false" type="radio" {{#unless Geofence}}checked="checked"{{/unless}}>
+                            {{@global.LANGUAGE.COM_MSG39}}
+                        </label>
+                        
+                
                     </div>
-                </div>                        
-            </div>       
-            
-        </div> -->
+                    <div class="col-33 width-auto">
+                        {{@global.LANGUAGE.ASSET_TRACK_MSG16}}
+                    </div>
+                    <div class="col-33 width-auto color-red">
+                        
+                        <label for="GeofenceOn">
+                            {{@global.LANGUAGE.COM_MSG40}}
+                            <input id="GeofenceOn" name='Geofence' placeholder='Radio' value="true" type="radio" {{#if Geofence}}checked="checked"{{/if}}>
+                        </label>
+                        
+                    </div>
+                </div> -->
+                <!-- <div class="list-block no-hairlines no-hairlines-between m-0 geofenceSetList">
+                    <ul class="row no-gutter">
+                        <li class="col-33 color-green width-auto">
+                            <label class="label-radio item-content ">                                   
+                                <input type="radio" name="Geofence" value="false"  {{#unless Geofence}}checked="checked"{{/unless}}>
+                                
+                
+                                <div class="item-inner">
+                                    <div class="item-title">{{@global.LANGUAGE.COM_MSG39}}</div>
+                                </div>                                
+                            </label>
+                        </li>  
+                        <li class="col-33  width-auto">
+                            <div class="item-content pl-0">
+                                <div class="item-inner pr-0">
+                                    <div class="item-title">{{@global.LANGUAGE.ASSET_TRACK_MSG16}}</div>            
+                                </div>
+                            </div>
+                        </li>                              
+                        <li class="col-33 color-red width-auto">
+                            <label class="label-radio item-content flex-direction-reverse">
+                                <input type="radio" name="Geofence" value="true"  {{#if Geofence}}checked="checked"{{/if}}>
+                               
+                                <div class="item-inner justify-content-flex-end">
+                                    <div class="item-title">{{@global.LANGUAGE.COM_MSG40}}</div>
+                                </div>   
+                                
+                
+                            </label>
+                        </li>       
+                
+                    </ul>
+                </div> -->
+            </div>
+          
+        </div>
+    	
     </div>
-	
+
 </div>

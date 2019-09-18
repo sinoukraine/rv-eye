@@ -80,6 +80,9 @@
 .icon-menu-signout:before {
   content: "\6e";
 }
+.icon-menu-user-guide:before {
+  content: "\6f";
+}
 .icon-other-arrow:before {
   content: "\70";
 }
@@ -145,22 +148,4 @@
 }
 .icon-sort:before {
   content: "\4b";
-}
-.icon-menu-support:before {
-  content: "\4c";
-}
-.icon-other-report-theft:before {
-  content: "\4d";
-}
-.icon-other-user-manual:before {
-  content: "\6f";
-}
-.icon-hint:before {
-  content: "\4e";
-}
-.icon-other-menu-geofence:before {
-  content: "\4f";
-}
-.icon-other-menu:before {
-  content: "\50";
 }

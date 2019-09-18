@@ -252,7 +252,7 @@ window.LanguagePackages= {
 		"ASSET_TRACK_MSG14": "sec",	
 		"ASSET_TRACK_MSG15": "GPRS",
 		"ASSET_TRACK_MSG16": "Geo Fence Set",
-		"ASSET_TRACK_MSG17": "Go To",		
+		"ASSET_TRACK_MSG17": "Go To",	
 
 		"ASSET_EDIT_MSG00": "Tag",
 		"ASSET_EDIT_MSG01": "Name",
