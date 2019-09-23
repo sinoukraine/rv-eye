@@ -1,188 +1,196 @@
-<div class="navbar bg-boatwatch no-border ">
-    <div class="navbar-inner">
-        <div class="left">
-            <a href="#" class="link backToIndex "> <i class="f7-icons" >chevron_left</i></a>
-        </div>
-        <div class="center sliding  ">{{Name}}</div>
-        <div class="right sliding">
-            <a href="#" class="link buttonAssetEdit"><i class="f7-icons icon-header-edit"></i></a>                  
-        </div>
-        <div class="subnavbar">
-            <div class="buttons-row">
-                <a href="#" class="button tab-link active" data-id="asset.status" data-href="">
-                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG07}}</b></span>
-                </a>
-                <a href="#" class="button tab-link" data-id="asset.alarm" data-href="">
-                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ALARM_MSG01}}</b></span>
-                </a>
-                <a href="#" class="button tab-link" data-id="asset.playback" data-href="">
-                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG08}}</b></span>
-                </a>
-                <a href="#" class="button tab-link" data-id="asset.track" data-href="">
-                    <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG09}}</b></span>
-                </a>
+<div class="page status_page" data-page="asset.status">
+	<div class="navbar bg-boatwatch ">
+        <div class="navbar-inner">
+            <div class="left">
+            	<a href="#" class="link backToIndex "> <i class="icon icon-header-arrow-back" ></i></a>
+            </div>
+            <div class="left navbar_title ">{{Name}}</div>
+            <div class="right">
+            	<a href="#" class="link buttonAssetEdit"><i class="icon icon-header-edit"></i></a>              	
             </div>
         </div>
     </div>
-</div>
+    
+	<div class="toolbar tabbar bg-boatwatch  bw_top_shadow">
+	    <div class="toolbar-inner">
+	        <a href="#" class="tab-link active" data-id="asset.status" data-href="">
+	            <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG07}}</b></span>
+	        </a>
+            <a href="#" class="tab-link" data-id="asset.alarm" data-href="">
+                <span class="tabbar-label"><b>{{@global.LANGUAGE.ALARM_MSG01}}</b></span>
+            </a>
+	        <a href="#" class="tab-link" data-id="asset.playback" data-href="">
+	            <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG08}}</b></span>
+	        </a>
+	        <a href="#" class="tab-link" data-id="asset.track" data-href="">
+	            <span class="tabbar-label"><b>{{@global.LANGUAGE.ASSET_STATUS_MSG09}}</b></span>
+	        </a>
 
-<div class="pages">
-    <div class="page with-subnavbar status_page" data-page="asset.status">
-    	
-        <div class="bottom-button-wrapper bg-white">
-            <!-- <div class="bottom-button-content">
-                            <a href="resources/templates/report.theft.msg.html" class="button  button-fill bg-boatwatch"><i class="f7-icons icon icon-other-report-theft mr-8 color-white size-17"></i>{{@global.LANGUAGE.COM_MSG55}}</a>
-                        </div> --> 
+	        
+	    </div>
+	</div>
+
+    <div class="page-content with-bottom-button">
+
+    	<div class="content-block status_block_top">
+    		<div class="row no-gutter">
+			    <div class="col-33 open-gsm">
+                    <!-- <img src="resources/images/svg_date.svg" alt=""> -->
+                    <i class="f7-icons icon-status-cell position_cell {{GSM}}"></i>
+                    <p>{{@global.LANGUAGE.ASSET_STATUS_MSG26}}</p>  
+                    <!-- <p class="position_data position_time">{{Time}}</p> -->
+                </div>                
+                <div class="col-33 open-gps">
+                    <!-- <img src="resources/images/svg_direction.svg" alt=""> -->
+                    <i class="f7-icons icon-status-gps position_gps {{GPS}}"></i>
+                    <p>{{@global.LANGUAGE.ASSET_STATUS_MSG27}}</p>  
+                    <!-- <p class="position_data position_direction">{{Direction}} </p> -->
+                </div> 
+                <div class="col-33 open-power">
+                    <i class="f7-icons icon-status-power position_power {{Power}}"></i>
+                    <!-- <img src="resources/images/svg_speed.svg" alt=""> -->
+                    <p>{{@global.LANGUAGE.ASSET_STATUS_MSG28}}</p>  
+                    <!-- <p class="position_data position_speed">{{Speed}}</p> -->
+                </div>               
+			</div>
+    	</div>
+
+        <div class="list-block media-list status_block_list">                
+            <ul >   
+                
+                <li class="item-content open-time">
+                    <div class="item-media state-0"><i class="f7-icons icon-status-date"></i></div>
+                    <div class="item-inner"> 
+                        <div class="item-title-row">
+                            <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG00}}</div>
+                            <div class="item-after position_time">{{Time}}</div>
+                        </div>                        
+                    </div>
+                </li> 
+                <li class="item-content open-direction">
+                    <div class="item-media state-0"><i class="f7-icons icon-status-heading"></i></div>
+                    <div class="item-inner"> 
+                        <div class="item-title-row">
+                            <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG01}}</div>
+                            <div class="item-after position_direction">{{Direction}}</div>
+                        </div>                        
+                    </div>
+                </li>
+                <li class="item-content open-speed">
+                    <div class="item-media state-0"><i class="f7-icons icon-status-speed"></i></div>
+                    <div class="item-inner"> 
+                        <div class="item-title-row">
+                            <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG02}}</div>
+                            <div class="item-after position_speed">{{Speed}}</div>
+                        </div>                        
+                    </div>
+                </li>
+                <li class="item-content open-mileage">
+                    <div class="item-media state-0"><i class="f7-icons icon-status-log"></i></div>
+                    <div class="item-inner"> 
+                        <div class="item-title-row">
+                            <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG10}}</div>
+                            <div class="item-after position_mileage">{{Mileage}}</div>
+                        </div>                        
+                    </div>
+                </li>                  
+                <li class="item-content open-address">
+                    <div class="item-media state-0"><i class="f7-icons icon-status-address"></i></div>
+                    <div class="item-inner">                     
+                        <div class="item-text display_address">{{Address}}</div> 
+                        <div class="item-subtext position_coords">{{Coords}}</div>              
+                    </div>
+                </li>
+                <li class="item-content position_geofence open-geofence">
+                    <div class="item-media {{js "this.GeofenceState == 'Off' ? 'state-0' : 'state-3'"}} "><i class="f7-icons icon-status-geofence"></i></div>
+                    <div class="item-inner"> 
+                        <div class="item-title-row">
+                            <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG24}}</div>
+                            <div class="item-after  {{js "this.GeofenceState == 'Off' ? 'state-0' : 'state-3'"}}">{{GeofenceState}}</div>
+                        </div>                        
+                    </div>
+                </li>
+                {{#if Voltage}}
+                <li class="item-content open-voltage">
+                    <div class="item-media state-0"><i class="f7-icons icon-status-voltage"></i></div>
+                    <div class="item-inner"> 
+                        <div class="item-title-row">
+                            <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG06}}</div>
+                            <div class="item-after position_voltage">{{Voltage}}</div>
+                        </div>  
+                    </div>                    
+                </li>
+                {{/if}}                
+                {{#if Battery}}
+                    <li class="item-content open-battery">
+                        <div class="item-media state-0"><i class="f7-icons icon-status-battery"></i></div>
+                        <div class="item-inner"> 
+                            <div class="item-title-row">
+                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG11}}</div>
+                                <div class="item-after position_battery">{{Battery}}</div>
+                            </div> 
+                        </div> 
+                    </li>
+                {{/if}}  
+                {{#if Fuel}}
+                    <li class="item-content open-fuel">
+                        <div class="item-media state-0"><i class="f7-icons icon-status-fuel"></i></div>
+                        <div class="item-inner"> 
+                            <div class="item-title-row">
+                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG12}}</div>
+                                <div class="item-after position_fuel">{{Fuel}}</div>
+                            </div>         
+                        </div>                 
+                    </li>
+                {{/if}}  
+                {{#if EngineHours}}
+                    <li class="item-content open-engineHours">
+                        <div class="item-media state-0"><i class="f7-icons icon-status-engine-hours"></i></div>
+                        <div class="item-inner"> 
+                            <div class="item-title-row">
+                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG38}}</div>
+                                <div class="item-after position_engineHours">{{EngineHours}}</div>
+                            </div>    
+                        </div>                       
+                    </li>
+                {{/if}}         
+                {{#if StoppedDuration}}
+                    <li class="item-content  open-stoppedDuration">
+                        <div class="item-media state-0"><i class="f7-icons icon-status-stationary-time"></i></div>
+                        <div class="item-inner"> 
+                            <div class="item-title-row">
+                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG39}}</div>
+                                <div class="item-after position_stoppedDuration">{{StoppedDuration}}</div>
+                            </div> 
+                        </div> 
+                    </li>
+                {{/if}}           
+            </ul>                
+        </div>
+
+        <!-- <div class="content-block">
+            <a href="tel:8443663500" target="_blank" class="external button button-fill button-big bg-boatwatch call-button">
+                <i class="f7-icons icon-other-call"></i>
+                {{@global.LANGUAGE.MENU_MSG11}}
+            </a>
+        </div> -->
+        
+        <!-- <div class="bottom-button-wrapper bg-color-page">
             <div class="bottom-button-content">
-                <a href="tel:18446013500" target="_blank" class="external button button-fill bg-boatwatch call-button "><i class="f7-icons icon icon-other-call mr-8 fs-17 text-color-black"></i>{{@global.LANGUAGE.MENU_MSG11}}</a>
+                <a href="resources/templates/report.theft.msg.html" class="button button-fill call-button bg-boatwatch"><i class="f7-icons icon icon-other-report-theft mr-8"></i>{{@global.LANGUAGE.COM_MSG55}}</a>
+            </div>            
+        </div> -->
+        		
+        <div class="bottom-button-wrapper bg-color-page">
+            <div class="bottom-button-content">
+                <a href="tel:18446013500" target="_blank" class="external button button-fill bg-boatwatch call-button">
+                    <i class="f7-icons icon-other-call"></i>
+                    {{@global.LANGUAGE.MENU_MSG11}}
+                </a>
             </div>            
         </div>
-        <div class="page-content">
+		
+    	
 
-        	<div class="content-block status_block_top">
-        		<div class="row no-gutter">
-    			    <div class="col-33 open-gsm">
-                        <!-- <img src="resources/images/svg_date.svg" alt=""> -->
-                        <i class="f7-icons icon-status-cell position_cell {{GSM}}"></i>
-                        <p>{{@global.LANGUAGE.ASSET_STATUS_MSG26}}</p>  
-                        <!-- <p class="position_data position_time">{{Time}}</p> -->
-                    </div>                
-                    <div class="col-33 open-gps">
-                        <!-- <img src="resources/images/svg_direction.svg" alt=""> -->
-                        <i class="f7-icons icon-status-gps position_gps {{GPS}}"></i>
-                        <p>{{@global.LANGUAGE.ASSET_STATUS_MSG27}}</p>  
-                        <!-- <p class="position_data position_direction">{{Direction}} </p> -->
-                    </div> 
-                    <div class="col-33 open-power">
-                        <i class="f7-icons icon-status-power position_power {{Power}}"></i>
-                        <!-- <img src="resources/images/svg_speed.svg" alt=""> -->
-                        <p>{{@global.LANGUAGE.ASSET_STATUS_MSG28}}</p>  
-                        <!-- <p class="position_data position_speed">{{Speed}}</p> -->
-                    </div>               
-    			</div>
-        	</div>
-
-            <div class="list-block media-list status_block_list">                
-                <ul >   
-                    
-                    <li class="item-content open-time">
-                        <div class="item-media state-0"><i class="f7-icons icon-status-date"></i></div>
-                        <div class="item-inner"> 
-                            <div class="item-title-row">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG00}}</div>
-                                <div class="item-after position_time">{{Time}}</div>
-                            </div>                        
-                        </div>
-                    </li> 
-                    <li class="item-content open-direction">
-                        <div class="item-media state-0"><i class="f7-icons icon-status-heading"></i></div>
-                        <div class="item-inner"> 
-                            <div class="item-title-row">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG01}}</div>
-                                <div class="item-after position_direction">{{Direction}}</div>
-                            </div>                        
-                        </div>
-                    </li>
-                    <li class="item-content open-speed">
-                        <div class="item-media state-0"><i class="f7-icons icon-status-speed"></i></div>
-                        <div class="item-inner"> 
-                            <div class="item-title-row">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG02}}</div>
-                                <div class="item-after position_speed">{{Speed}}</div>
-                            </div>                        
-                        </div>
-                    </li>
-                    <li class="item-content open-mileage">
-                        <div class="item-media state-0"><i class="f7-icons icon-status-log"></i></div>
-                        <div class="item-inner"> 
-                            <div class="item-title-row">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG10}}</div>
-                                <div class="item-after position_mileage">{{Mileage}}</div>
-                            </div>                        
-                        </div>
-                    </li>                  
-                    <li class="item-content open-address">
-                        <div class="item-media state-0"><i class="f7-icons icon-status-address"></i></div>
-                        <div class="item-inner">                     
-                            <div class="item-text display_address">{{Address}}</div> 
-                            <div class="item-subtext position_coords">{{Coords}}</div>              
-                        </div>
-                    </li>
-                    <li class="item-content position_geofence open-geofence">
-                        <div class="item-media {{js "this.GeofenceState == 'Off' ? 'state-0' : 'state-3'"}} "><i class="f7-icons icon-status-geofence"></i></div>
-                        <div class="item-inner"> 
-                            <div class="item-title-row">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG24}}</div>
-                                <div class="item-after  {{js "this.GeofenceState == 'Off' ? 'state-0' : 'state-3'"}}">{{GeofenceState}}</div>
-                            </div>                        
-                        </div>
-                    </li>
-                    {{#if Voltage}}
-                    <li class="item-content open-voltage">
-                        <div class="item-media state-0"><i class="f7-icons icon-status-voltage"></i></div>
-                        <div class="item-inner"> 
-                            <div class="item-title-row">
-                                <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG06}}</div>
-                                <div class="item-after position_voltage">{{Voltage}}</div>
-                            </div>  
-                        </div>                    
-                    </li>
-                    {{/if}}                
-                    {{#if Battery}}
-                        <li class="item-content open-battery">
-                            <div class="item-media state-0"><i class="f7-icons icon-status-battery"></i></div>
-                            <div class="item-inner"> 
-                                <div class="item-title-row">
-                                    <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG11}}</div>
-                                    <div class="item-after position_battery">{{Battery}}</div>
-                                </div> 
-                            </div> 
-                        </li>
-                    {{/if}}  
-                    {{#if Fuel}}
-                        <li class="item-content open-fuel">
-                            <div class="item-media state-0"><i class="f7-icons icon-status-fuel"></i></div>
-                            <div class="item-inner"> 
-                                <div class="item-title-row">
-                                    <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG12}}</div>
-                                    <div class="item-after position_fuel">{{Fuel}}</div>
-                                </div>         
-                            </div>                 
-                        </li>
-                    {{/if}}  
-                    {{#if EngineHours}}
-                        <li class="item-content open-engineHours">
-                            <div class="item-media state-0"><i class="f7-icons icon-status-engine-hours"></i></div>
-                            <div class="item-inner"> 
-                                <div class="item-title-row">
-                                    <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG38}}</div>
-                                    <div class="item-after position_engineHours">{{EngineHours}}</div>
-                                </div>    
-                            </div>                       
-                        </li>
-                    {{/if}}         
-                    {{#if StoppedDuration}}
-                        <li class="item-content  open-stoppedDuration">
-                            <div class="item-media state-0"><i class="f7-icons icon-status-stationary-time"></i></div>
-                            <div class="item-inner"> 
-                                <div class="item-title-row">
-                                    <div class="item-title">{{@global.LANGUAGE.ASSET_STATUS_MSG39}}</div>
-                                    <div class="item-after position_stoppedDuration">{{StoppedDuration}}</div>
-                                </div> 
-                            </div> 
-                        </li>
-                    {{/if}}           
-                </ul>                
-            </div>
-            		
-    		<!-- <div class="content-block">
-                            <a href="tel:8443663500" target="_blank" class="external button button-big button-fill bg-boatwatch call-button">
-                                <i class="f7-icons icon-other-call"></i>
-                                {{@global.LANGUAGE.MENU_MSG11}}
-                            </a>
-                        </div> -->
-        	
-
-        </div>
     </div>
 </div>
