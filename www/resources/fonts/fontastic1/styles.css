@@ -143,3 +143,9 @@
 .icon-status-heading:before {
   content: "\49";
 }
+.icon-other-call:before {
+  content: "\4a";
+}
+.icon-sort:before {
+  content: "\4b";
+}

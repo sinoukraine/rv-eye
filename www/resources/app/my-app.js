@@ -17,6 +17,7 @@ window.COM_TIMEFORMAT = 'YYYY-MM-DD HH:mm:ss';
 window.COM_TIMEFORMAT2 = 'YYYY-MM-DDTHH:mm:ss';
 window.COM_TIMEFORMAT3 = 'YYYY-MM-DDTHH:MM';
 UTCOFFSET = moment().utcOffset();
+
 function setUserinfo(user){localStorage.setItem("COM.QUIKTRAK.LIVE.USERINFO", JSON.stringify(user));}
 function getUserinfo(){var ret = {};var str = localStorage.getItem("COM.QUIKTRAK.LIVE.USERINFO");if(str) {ret = JSON.parse(str);} return ret;}
 function isJsonString(str){try{var ret=JSON.parse(str);}catch(e){return false;}return ret;}
@@ -47,8 +48,8 @@ function getPlusInfo(){
             if(!localStorage.PUSH_DEVICE_TOKEN)
             localStorage.PUSH_DEVICE_TOKEN = uid;
             //localStorage.PUSH_DEVICE_TOKEN = "75ba1639-92ae-0c4c-d423-4fad1e48a49d"
-        localStorage.PUSH_APPID_ID = 'ios.app.quiktrak.eu.rveye';
-        localStorage.DEVICE_TYPE = "ios.app.quiktrak.eu.rveye";        
+        localStorage.PUSH_APPID_ID = 'android.app.quiktrak.eu.rveye';
+        localStorage.DEVICE_TYPE = "android.app.quiktrak.eu.rveye";        
     }
 }
 
@@ -78,9 +79,6 @@ document.addEventListener("deviceready", onDeviceReady, false );
 
 function onDeviceReady(){ 
     AppDetails.appId = BuildInfo.packageName;
-    if (cordova && cordova.InAppBrowser) {
-        window.open = cordova.InAppBrowser.open;
-    }
     //fix app images and text size
     if (window.MobileAccessibility) {
         window.MobileAccessibility.usePreferredTextZoom(false);    
@@ -115,7 +113,7 @@ function onDeviceReady(){
 }
 
 function setupPush(){
-        push = PushNotification.init({
+        var push = PushNotification.init({
             "android": {
                 //"senderID": "264121929701"                             
             },
@@ -179,7 +177,7 @@ function setupPush(){
             }
 
             
-            if (device && device.platform && device.platform.toLowerCase() === 'ios') {
+            if (device && device.platform && device.platform.toLowerCase() == 'ios') {
                 push.finish(
                     () => {
                       console.log('processing of push data is finished');
@@ -213,7 +211,7 @@ function onAppPause(){
         $hub.stop();
     }*/
 } 
-function onAppResume(){      
+function onAppResume(){ 
     if (localStorage.ACCOUNT && localStorage.PASSWORD) {
         getNewNotifications(); 
         getNewData();
@@ -239,14 +237,13 @@ function backFix(event){
 
 // Initialize your app
 var App = new Framework7({
-    animateNavBackIcon: true,    
-    swipeBackPage: false,    
+    swipePanel: 'left',   
+    swipeBackPage: false,
+    material: true,
     //pushState: true,       
-    swipePanel: 'left', 
     allowDuplicateUrls: true,    
     sortable: false,    
     modalTitle: 'RV Eye',
-    notificationTitle: 'RV Eye',
     precompileTemplates: true,
     template7Pages: true,
     onAjaxStart: function(xhr){
@@ -263,7 +260,6 @@ var $$ = Dom7;
 // Add view
 var mainView = App.addView('.view-main', {
     domCache: true,  
-    dynamicNavbar: true,
     swipeBackPage: false
 });
 
@@ -292,10 +288,10 @@ var prevStatusLatLng = {
 
 var geofenceMarkerGroup = false; 
 
-var API_DOMIAN1 = "http://api.m2mglobaltech.com/QuikTrak/V1/";
+var API_DOMIAN1 = "https://api.m2mglobaltech.com/QuikTrak/V1/";
 var API_DOMIAN2 = "";
-var API_DOMIAN3 = "http://api.m2mglobaltech.com/QuikProtect/V1/";
-var API_DOMIAN4 = "http://api.m2mglobaltech.com/Quikloc8/V1/";
+var API_DOMIAN3 = "https://api.m2mglobaltech.com/QuikProtect/V1/";
+var API_DOMIAN4 = "https://api.m2mglobaltech.com/Quikloc8/V1/";
 var API_URL = {};
 API_URL.URL_GET_LOGIN = API_DOMIAN1 + "User/Auth?username={0}&password={1}&appKey={2}&mobileToken={3}&deviceToken={4}&deviceType={5}";
 //API_URL.URL_GET_LOGOUT = API_DOMIAN1 + "User/Logoff2?MajorToken={0}&MinorToken={1}&username={2}&mobileToken={3}";
@@ -307,6 +303,7 @@ API_URL.URL_SET_ALARM = API_DOMIAN1 + "Device/AlarmOptions2?MinorToken={0}&imei=
 
 API_URL.URL_SET_ALERT_CONFIG = API_DOMIAN1 + "Device/AlertConfigureEdit";
 API_URL.URL_GET_ALERT_CONFIG = API_DOMIAN1 + "Device/GetAlertConfigure";
+
 
 API_URL.URL_SET_GEOLOCK_ON = API_DOMIAN1 + "Device/Lock?MajorToken={0}&MinorToken={1}&code={2}&radius=100";
 API_URL.URL_SET_GEOLOCK_OFF = API_DOMIAN1 + "Device/Unlock?MajorToken={0}&MinorToken={1}&code={2}";
@@ -328,29 +325,28 @@ API_URL.URL_GET_GEOFENCE_LIST = API_DOMIAN1 + "Device/GetFenceList";
 API_URL.URL_GEOFENCE_EDIT = API_DOMIAN1 + "Device/FenceEdit";
 API_URL.URL_GEOFENCE_DELETE = API_DOMIAN1 + "Device/FenceDelete";
 API_URL.URL_GET_GEOFENCE_ASSET_LIST = API_DOMIAN1 + "Device/GetFenceAssetList";
-API_URL.URL_PHOTO_UPLOAD = "http://upload.quiktrak.co/image/Upload";
+API_URL.URL_PHOTO_UPLOAD = "https://upload.quiktrak.co/image/Upload";
+//API_URL.URL_SUPPORT = "https://support.quiktrak.eu/?name={0}&loginName={1}&email={2}&phone={3}&s={4}";
 
-//API_URL.URL_ROUTE = "https://www.google.com/maps/dir/?api=1&destination={0},{1}"; //&travelmode=walking
-API_URL.URL_ROUTE = "maps://maps.apple.com/maps?daddr={0},{1}"; // ios link
+API_URL.URL_ROUTE = "https://www.google.com/maps/dir/?api=1&destination={0},{1}"; //&travelmode=walking
 API_URL.URL_REFRESH_TOKEN = API_DOMIAN1 + "User/RefreshToken";
-
 API_URL.URL_GET_SPEEDLIMIT = "https://ss.sinopacific.com.ua/speedlimits/v1?latitude={0}&longitude={1}&timestamp=1";
 
 API_URL.URL_REPORT_THEFT = "https://forms.quiktrak.com.au/report-theft/?loginName={0}&imei={1}&make={2}&model={3}&rego={4}";
 API_URL.URL_USERGUIDE = 'https://support.rv-eye.co/manual/app-user-guide.pdf';
 API_URL.URL_SUPPORT = "https://support.rv-eye.co/?name={0}&loginName={1}&email={2}&phone={3}&s={4}";
 
+
+
 var cameraButtons = [
     {
         text: 'Take picture',
-        //color: 'boatwatch',
         onClick: function () {
             getImage(1);
         }
     },
     {
         text: 'From gallery',
-        //color: 'boatwatch',
         onClick: function () {
             getImage(0);
         }
@@ -370,12 +366,8 @@ var html = Template7.templates.template_Login_Screen();
 $$(document.body).append(html); 
 html = Template7.templates.template_Popover_Menu();
 $$(document.body).append(html);
-/*html = Template7.templates.template_AssetList();
-$$('.navbar-fixed').append(html);*/
-$$('.index-title').html(LANGUAGE.MENU_MSG00);
-$$('.index-search-input').attr('placeholder',LANGUAGE.COM_MSG06);
-$$('.index-search-cancel').html(LANGUAGE.COM_MSG04);
-$$('.index-search-nothing-found').html(LANGUAGE.COM_MSG05);
+html = Template7.templates.template_AssetList();
+$$('.navbar-fixed').append(html);
 
 
 if (inBrowser) {
@@ -403,14 +395,14 @@ virtualAssetList = App.virtualList('.assets_list', {
     items: [
     ],
     height: function (item) {
-        var asset = POSINFOASSETLIST[item.IMEI];        
+        /*var asset = POSINFOASSETLIST[item.IMEI];        
         var assetFeaturesStatus = Protocol.Helper.getAssetStateInfo(asset);        
         var height = 99; 
         if (assetFeaturesStatus && assetFeaturesStatus.voltage && assetFeaturesStatus.fuel || assetFeaturesStatus && assetFeaturesStatus.battery && assetFeaturesStatus.fuel || assetFeaturesStatus && assetFeaturesStatus.battery && assetFeaturesStatus.voltage) {
             
             height = 127;
-        }
-        //var height = 79; 
+        }*/
+        var height = 88; 
         return height; //display the image with 50px height
     },
     // Display the each item using Template7 template parameter
@@ -436,40 +428,40 @@ virtualAssetList = App.virtualList('.assets_list', {
             ret +=              '</div>';
             ret +=          '</div>';
             ret +=          '<div id="status-state'+item.IMEI+'" class="item-subtitle '+assetFeaturesStatus.status.state+'"><i class="f7-icons icon-status-circle icon-status-fix"></i><span id="status-value'+item.IMEI+'">'+assetFeaturesStatus.status.value+'</span></div>';
-            ret +=          '<div class="item-text">';
+            /*ret +=          '<div class="item-text">';
             ret +=              '<div class="row no-gutter">';                            
                                 if (assetFeaturesStatus.speed) {
             ret +=                  '<div class="col-50">';
-            ret +=                     '<i class="f7-icons icon-status-speed asset_list_icon"></i>';
+            ret +=                     '<i class="f7-icons color-gray icon-status-speed asset_list_icon"></i>';
             ret +=                     '<span id="speed-value'+item.IMEI+'">'+assetFeaturesStatus.speed.value+'</span>'; 
             ret +=                  '</div>';
                                 }
                                 if (assetFeaturesStatus.voltage) {
             ret +=                  '<div class="col-50">';
-            ret +=                     '<i class="f7-icons icon-status-voltage asset_list_icon"></i>';           
+            ret +=                     '<i class="f7-icons color-gray icon-status-voltage asset_list_icon"></i>';           
             ret +=                     '<span id="voltage-value'+item.IMEI+'">'+assetFeaturesStatus.voltage.value+'</span>';
             ret +=                  '</div>';
                                 }  
                                 if (assetFeaturesStatus.battery) {
             ret +=                  '<div class="col-50">';
-            ret +=                     '<i class="f7-icons icon-status-battery asset_list_icon"></i>';
+            ret +=                     '<i class="f7-icons color-gray icon-status-battery asset_list_icon"></i>';
             ret +=                     '<span id="battery-value'+item.IMEI+'">'+assetFeaturesStatus.battery.value+'</span>';
             ret +=                  '</div>';
                                 }  
                                 if (assetFeaturesStatus.temperature) {
             ret +=                  '<div class="col-50">';
-            ret +=                     '<i class="f7-icons icon-status-temperature asset_list_icon"></i>';
+            ret +=                     '<i class="f7-icons color-gray icon-status-temperature asset_list_icon"></i>';
             ret +=                     '<span id="temperature-value'+item.IMEI+'">'+assetFeaturesStatus.temperature.value+'</span>';
             ret +=                  '</div>';
                                 }
                                 if (assetFeaturesStatus.fuel) {
             ret +=                  '<div class="col-50">';
-            ret +=                     '<i class="f7-icons icon-status-fuel asset_list_icon"></i>';
+            ret +=                     '<i class="f7-icons color-gray icon-status-fuel asset_list_icon"></i>';
             ret +=                     '<span id="fuel-value'+item.IMEI+'">'+assetFeaturesStatus.fuel.value+'</span>'; 
             ret +=                  '</div>';
                                 }           
             ret +=              '</div>';
-            ret +=          '</div>';
+            ret +=          '</div>';*/
             ret +=      '</div>';                   
             ret +=  '</li>';
 
@@ -508,16 +500,6 @@ $$('body').on('click', '.deleteAllNotifications', function(){
     });
 });
 
-/*$$('body').on('click', '.index-title', function(){
-    //var json = '{"title":"GEOLOCK WARNING","type":1024,"imei":"0000004700673137","name":"A16 WATCH","lat":43.895091666666666,"lng":125.29207,"speed":0,"direct":0,"time":"2018-08-23 16:56:36"}';
-    //showMsgNotification([json]);
-    //getNewData();
-    //console.log($$('.status_page').length);
-
-    var json = '{"title":"Speed","type":32,"imei":"0000001683122697","name":"0000001683122697","lat":50.249984,"lng":32.282368,"speed":130,"direct":0,"time":"2018-08-23 16:56:37"}';
-    setNotificationList([json]);
-});*/
-
 $$('body').on('click', '.toggle-password', function(){
     var password = $(this).siblings("input[name='password']");
     if(password.hasClass('show_pwd')){
@@ -549,13 +531,12 @@ $$('body').on('change keyup input click', '.only_numbers', function(){
 $$('body').on('click', '.sorting_button', function(e){  
     var clickedLink = this;
     var popoverHTML = '<div class="popover">'+
-                      '<div class="popover-inner">'+                      
+                      '<div class="popover-inner">'+                       
                         '<div class="list-block">'+
-                          '<ul>'+                       
-
-                          '<li class="color-gray list-button-label">'+LANGUAGE.COM_MSG41+'</li>'+
-                          '<li><a href="#" class="item-link list-button color-boatwatch" onClick="sortAssetList(this);" data-sort-by="name" >'+LANGUAGE.COM_MSG42+'</a></li>'+
-                          '<li><a href="#" class="item-link list-button color-boatwatch" onClick="sortAssetList(this);" data-sort-by="state" >'+LANGUAGE.COM_MSG43+'</a></li>'+                          
+                          '<ul>'+
+                          '<li><a href="#" class="item-divider">'+LANGUAGE.COM_MSG41+'</a></li>'+
+                          '<li><a href="#" class="item-link list-button" onClick="sortAssetList(this);" data-sort-by="name" >'+LANGUAGE.COM_MSG42+'</a></li>'+
+                          '<li><a href="#" class="item-link list-button" onClick="sortAssetList(this);" data-sort-by="state" >'+LANGUAGE.COM_MSG43+'</a></li>'+                          
                           '</ul>'+
                         '</div>'+
                       '</div>'+
@@ -563,16 +544,17 @@ $$('body').on('click', '.sorting_button', function(e){
     App.popover(popoverHTML, clickedLink);
 });
 
+
+
 $$('body').on('click', 'a.external', function(event) {
     event.preventDefault();
     var href = this.getAttribute('href');
     if (href) {
-        /*if (typeof navigator !== "undefined" && navigator.app) {                
+        if (typeof navigator !== "undefined" && navigator.app) {                
             navigator.app.loadUrl(href, {openExternal: true}); 
         } else {
             window.open(href,'_blank');
-        }*/
-        window.open(encodeURI(href), '_blank', 'location=yes');
+        }
     }
     return false;
 });
@@ -586,7 +568,11 @@ $$('body').on('click', '.routeButton', function(){
             encodeURIComponent(lat),
             encodeURIComponent(lng)
             );
-        window.open(href, '_blank', 'location=yes');
+        if (typeof navigator !== "undefined" && navigator.app) {                
+            navigator.app.loadUrl(href, {openExternal: true}); 
+        } else {
+            window.open(href,'_blank');
+        }
     }
 });
 
@@ -631,16 +617,12 @@ $$('#menu li').on('click', function () {
             loadPageSupport(); 
             break;  */   
         case 'menuUserManual':
-            /*showCustomMessage({
-                title: LANGUAGE.MENU_MSG12,
-                text: LANGUAGE.PROMPT_MSG053,
-            });*/
             showUserGuide();
-            break;   
+            break;
 
-        case 'menuSupport':                    
-            loadPageSupport(); 
-            break;   
+        case 'menuSupport':
+            loadPageSupport();
+            break; 
 
         case 'menuLogout':
             App.confirm(LANGUAGE.PROMPT_MSG012, LANGUAGE.MENU_MSG04, function () {        
@@ -651,13 +633,21 @@ $$('#menu li').on('click', function () {
     }
 });
 
-
-
 /*$$('body').on('click', '.navbar_title, .navbar_title_index', function(){
     var json = '{"title":"GEOLOCK WARNING","type":1024,"imei":"0000001700091735","name":"0000001700091735","lat":43.895091666666666,"lng":125.29207,"speed":0,"direct":0,"time":"2018-08-23 16:56:36"}';
     showMsgNotification([json]);
     //getNewData();
     //console.log($$('.status_page').length);
+});*/
+
+/*$$('body').on('click', '.navbar_title, .navbar_title_index', function(){
+    //var json = '{"title":"GEOLOCK WARNING","type":1024,"imei":"0000004700673137","name":"A16 WATCH","lat":43.895091666666666,"lng":125.29207,"speed":0,"direct":0,"time":"2018-08-23 16:56:36"}';
+    //showMsgNotification([json]);
+    //getNewData();
+    //console.log($$('.status_page').length);
+
+    var json = '{"title":"Speed","type":32,"imei":"0000001683122697","name":"0000001683122697","lat":50.249984,"lng":32.282368,"speed":130,"direct":0,"time":"2018-08-23 16:56:37"}';
+    setNotificationList([json]);
 });*/
 
 $$(document).on('click', 'a.tab-link', function(e){
@@ -739,18 +729,17 @@ App.onPageInit('notification', function(page){
                     item.mileage = '-';
                 }
                 var alertName = Protocol.Helper.getAlertNameByType(item.type);
-                
                 ret = '<li class="swipeout" data-id="'+item.listIndex+'" data-title="'+item.title+'" data-type="'+item.type+'" data-imei="'+item.imei+'" data-name="'+item.name+'" data-lat="'+item.lat+'" data-lng="'+item.lng+'" data-time="'+item.time+'" data-speed="'+item.speed+'" data-direct="'+item.direct+'" data-mileage="'+item.mileage+'">' +                        
                             '<div class="swipeout-content item-content">' +
                                 '<div class="item-inner">' +
                                     '<div class="item-title-row">';
-                                        if (alertName) {
-                                            ret += '<div class="item-title">' + alertName + ' - ' + item.title + '</div>';
-                                        } else {
-                                            ret += '<div class="item-title">' + item.title + '</div>';
-                                        }
-                //ret +=                  '<div class="item-title">' + item.title + '</div>';
-                ret +=                  '<div class="item-after">' + item.time + '</div>' +         
+                if (alertName) {
+                    ret +=              '<div class="item-title">' + alertName + ' - ' + item.title + '</div>';
+                } else {
+                    ret +=              '<div class="item-title">' + item.title + '</div>';
+                }
+                //ret += '<div class="item-title">' + item.title + '</div>';
+                ret +=                  '<div class="item-after">' + item.time + '</div>' +
                                     '</div>' +
                                     '<div class="item-subtitle">'+item.name+'</div>' +                                        
                                 '</div>' +
@@ -1060,7 +1049,6 @@ App.onPageInit('asset.status', function (page) {
                 AssetImg = 'http://upload.quiktrak.co/Attachment/images/'+asset.Icon+'?'+ new Date().getTime();
             }
         }
-
         var MaxSpeed = asset.MaxSpeed;
 
         mainView.router.load({
@@ -1069,7 +1057,7 @@ App.onPageInit('asset.status', function (page) {
                 IMEI: asset.IMEI,
                 PRDTName: asset.PRDTName,
                 Name: asset.Name,
-                Registration: asset.Registration,                
+                Registration: asset.Registration,
                 Tag: asset.TagName,
                 Unit: asset.Unit,
                 Mileage: asset.InitMileage,
@@ -1116,7 +1104,6 @@ App.onPageInit('asset.edit', function (page) {
    
 
     $$('.saveAssetEdit').on('click', function(){
-        //console.log(page.context.MaxSpeed);
         var mileage = $$(page.container).find('input[name="Mileage"]').val() ? $$(page.container).find('input[name="Mileage"]').val() : 0;
         var runTime = $$(page.container).find('input[name="Runtime"]').val() ? $$(page.container).find('input[name="Runtime"]').val() : 0;
         var MaxSpeed = $$(page.container).find('input[name="MaxSpeed"]').val();
@@ -1132,9 +1119,9 @@ App.onPageInit('asset.edit', function (page) {
             Describe2: $$(page.container).find('input[name="Describe2"]').val(),
             Describe3: $$(page.container).find('input[name="Describe3"]').val(),
             Describe4: $$(page.container).find('input[name="Describe4"]').val(),
-            Icon: TargetAsset.ASSET_IMG,    
-            MaxSpeed: MaxSpeed,
-            //MaxSpeed: page.context.MaxSpeed,
+            Icon: TargetAsset.ASSET_IMG,
+            MaxSpeed: MaxSpeed, 
+            //MaxSpeed: page.context.MaxSpeed,    
         };
 
         var userInfo = getUserinfo();         
@@ -1261,7 +1248,7 @@ App.onPageInit('alarms.assets', function (page) {
     
     var virtualAlarmsAssetsList = App.virtualList('.alarmsAssetList', { 
         items: newAssetlist,
-        height: 44,
+        height: 88,
         searchAll: function (query, items) {           
             var foundItems = [];        
             for (var i = 0; i < items.length; i++) {           
@@ -1283,23 +1270,9 @@ App.onPageInit('alarms.assets', function (page) {
         },*/
         renderItem: function (index, item) {
             var ret = '';
-            //var assetImg = getAssetImg(item, {'assetList':true}); 
+            var assetImg = getAssetImg(item, {'assetList':true}); 
 
             ret +=  '<li data-index="'+index+'">';
-            ret +=      '<label class="label-checkbox item-content">';
-                 if (item.Selected) {
-                    ret +=          '<input type="checkbox" name="alarms-assets" value="" data-id="' + item.Id + '" data-imei="' + item.IMEI + '" checked="true" >';
-                }else{
-                    ret +=          '<input type="checkbox" name="alarms-assets" value="" data-id="' + item.Id + '" data-imei="' + item.IMEI + '" >';
-                } 
-            ret +=          '<div class="item-media"><i class="icon icon-form-checkbox"></i></div>';
-            ret +=          '<div class="item-inner">';
-            ret +=              '<div class="item-title">' + item.Name + '</div>';
-            ret +=          '</div>';
-            ret +=      '</label>';
-            ret +=  '</li>';
-
-            /*ret +=  '<li data-index="'+index+'">';
             ret +=      '<label class="label-checkbox item-content no-fastclick">';
                  if (item.Selected) {
                     ret +=          '<input type="checkbox" name="alarms-assets" value="" data-id="' + item.Id + '" data-imei="' + item.IMEI + '" checked="true" >';
@@ -1317,7 +1290,7 @@ App.onPageInit('alarms.assets', function (page) {
             ret +=              '</div>';
             ret +=          '</div>';
             ret +=      '</label>';
-            ret +=  '</li>';*/
+            ret +=  '</li>';
             
             return  ret;
         }
@@ -1431,11 +1404,7 @@ App.onPageInit('alarms.assets', function (page) {
 });
 
 App.onPageInit('alarms.select', function (page) {
-    
-
-    $(page.container).find('input[type="radio"].input-checkbox-alarm').checkRadioTweak();  
-
-    var alarm = $$(page.container).find('input[name = "checkbox-alarm"]');
+	var alarm = $$(page.container).find('input[name = "checkbox-alarm"]');
 
     //var alarmFields = ['accOff', 'accOn', 'customAlarm', 'custom2LowAlarm', 'geolock', 'geofenceIn', 'geofenceOut', 'illegalIgnition', 'lowBattery', 'mainBatteryFail', 'sosAlarm', 'speeding', 'tilt', 'harshAcc', 'harshBrk'];
 
@@ -1504,11 +1473,11 @@ App.onPageInit('alarms.select', function (page) {
                 title: '<div class="custom-modal-logo-wrapper"><img class="custom-modal-logo" src="resources/images/logo.png" alt=""/></div>',
                 text: '<div class="custom-modal-text">' + LANGUAGE.PROMPT_MSG060 + ':</div>',
                 afterText: `
-                <div class="list-block list-block-modal no-hairlines ">          
+                <div class="list-block list-block-modal m-0 no-hairlines ">          
                     <ul>                               
                         <li>
-                            <div class="item-content">                                    
-                                <div class="item-inner ">                                      
+                            <div class="item-content pl-0">                                    
+                                <div class="item-inner pr-0">                                      
                                     <div class="item-input item-input-field">
                                         <input type="tel" placeholder="${ LANGUAGE.PROMPT_MSG060 }" name="Overspeed" value="${ overspeedVal}" class="only_numbers">
                                     </div>
@@ -1797,9 +1766,15 @@ App.onPageInit('alarms.select', function (page) {
         });
 
     });
+    
+    
 
 
+});
 
+App.onPageBeforeRemove('alarms.select', function(page) {
+    // fix to close modal calendar if it was opened and default back button pressed
+    App.closeModal('.custom-picker');
 });
 
 
@@ -2134,10 +2109,9 @@ App.onPageInit('resetPwd', function (page) {
     });
 });
 
-App.onPageInit('asset.alarm', function (page) {    
+App.onPageInit('asset.alarm', function (page) { 
 
-    $(page.container).find('input[type="radio"].input-checkbox-alarm').checkRadioTweak(); 
-
+    //console.log(page.context);
     var alarm = $$(page.container).find('input[name = "checkbox-alarm"]');
 
     //var alarmFields = ['accOff', 'accOn', 'customAlarm', 'custom2LowAlarm', 'geolock', 'geofenceIn', 'geofenceOut', 'illegalIgnition', 'lowBattery', 'mainBatteryFail', 'sosAlarm', 'speeding', 'tilt', 'harshAcc', 'harshBrk'];
@@ -2205,11 +2179,11 @@ App.onPageInit('asset.alarm', function (page) {
                 title: '<div class="custom-modal-logo-wrapper"><img class="custom-modal-logo" src="resources/images/logo.png" alt=""/></div>',
                 text: '<div class="custom-modal-text">' + LANGUAGE.PROMPT_MSG060 + ':</div>',
                 afterText: `
-                <div class="list-block list-block-modal no-hairlines ">          
+                <div class="list-block list-block-modal m-0 no-hairlines ">          
                     <ul>                               
                         <li>
-                            <div class="item-content">                                    
-                                <div class="item-inner ">                                      
+                            <div class="item-content pl-0">                                    
+                                <div class="item-inner pr-0">                                      
                                     <div class="item-input item-input-field">
                                         <input type="tel" placeholder="${ LANGUAGE.PROMPT_MSG060 }" name="Overspeed" value="${ overspeedVal}" class="only_numbers">
                                     </div>
@@ -2496,6 +2470,7 @@ App.onPageInit('asset.alarm', function (page) {
         });
 
     });
+   
         
 });
 
@@ -2505,9 +2480,9 @@ App.onPageBeforeRemove('asset.alarm', function(page) {
 });
 
 
-App.onPageInit('asset.playback', function (page) { 
-    window.MONTHS = [LANGUAGE.ASSET_PLAYBACK_MSG12,LANGUAGE.ASSET_PLAYBACK_MSG13,LANGUAGE.ASSET_PLAYBACK_MSG14,LANGUAGE.ASSET_PLAYBACK_MSG15,LANGUAGE.ASSET_PLAYBACK_MSG16,LANGUAGE.ASSET_PLAYBACK_MSG17,LANGUAGE.ASSET_PLAYBACK_MSG18,LANGUAGE.ASSET_PLAYBACK_MSG19,LANGUAGE.ASSET_PLAYBACK_MSG20,LANGUAGE.ASSET_PLAYBACK_MSG21,LANGUAGE.ASSET_PLAYBACK_MSG22,LANGUAGE.ASSET_PLAYBACK_MSG23];
-
+App.onPageInit('asset.playback', function (page) {
+	window.MONTHS = [LANGUAGE.ASSET_PLAYBACK_MSG12,LANGUAGE.ASSET_PLAYBACK_MSG13,LANGUAGE.ASSET_PLAYBACK_MSG14,LANGUAGE.ASSET_PLAYBACK_MSG15,LANGUAGE.ASSET_PLAYBACK_MSG16,LANGUAGE.ASSET_PLAYBACK_MSG17,LANGUAGE.ASSET_PLAYBACK_MSG18,LANGUAGE.ASSET_PLAYBACK_MSG19,LANGUAGE.ASSET_PLAYBACK_MSG20,LANGUAGE.ASSET_PLAYBACK_MSG21,LANGUAGE.ASSET_PLAYBACK_MSG22,LANGUAGE.ASSET_PLAYBACK_MSG23];
+	
     var playbackListSettings = $$(page.container).find('.list-playback-settings'); 
     var today = new Date();
     var yesterday = new Date(new Date().setDate(new Date().getDate()-1));   
@@ -2520,7 +2495,7 @@ App.onPageInit('asset.playback', function (page) {
                           '<div class="toolbar-inner">'+
                             '<div class="left"><div class="text">'+LANGUAGE.ASSET_PLAYBACK_MSG04+'</div></div>'+
                             '<div class="right">'+
-                              '<a href="#" class="link close-picker color-white">{{closeText}}</a>'+
+                              '<a href="#" class="link close-picker color-black">{{closeText}}</a>'+
                             '</div>'+
                           '</div>'+
                         '</div>',
@@ -2536,13 +2511,13 @@ App.onPageInit('asset.playback', function (page) {
      
         formatValue: function (p, values, displayValues) {
             //console.log(displayValues);
-            if (Array.isArray(displayValues) && displayValues.length === 0) {
+			if (Array.isArray(displayValues) && displayValues.length === 0) {
                 displayValues[0] = moment(yesterday).format('MMMM');          
             }
-            else if(parseInt(displayValues[0]) >= 0){
-                displayValues[0] = MONTHS[parseInt(displayValues[0])];
+			else if(parseInt(displayValues[0]) >= 0){
+            	displayValues[0] = MONTHS[parseInt(displayValues[0])];
             }
-            /*let monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];*/
+			/*let monthArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];*/
             return displayValues[0] + ' ' + values[1] + ', ' + values[2];
         },
      
@@ -2550,7 +2525,7 @@ App.onPageInit('asset.playback', function (page) {
             // Months
             {
                 values: ('0 1 2 3 4 5 6 7 8 9 10 11').split(' '),
-                //values: ('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec').split(' '),
+				//values: ('Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec').split(' '),
                 //displayValues: ('January February March April May June July August September October November December').split(' '),
                 displayValues: MONTHS,
                 textAlign: 'left'
@@ -2633,7 +2608,7 @@ App.onPageInit('asset.playback', function (page) {
                           '<div class="toolbar-inner">'+
                             '<div class="left"><div class="text">'+LANGUAGE.ASSET_PLAYBACK_MSG06+'</div></div>'+
                             '<div class="right">'+
-                              '<a href="#" class="link close-picker color-white">{{closeText}}</a>'+
+                              '<a href="#" class="link close-picker color-black">{{closeText}}</a>'+
                             '</div>'+
                           '</div>'+
                         '</div>',
@@ -2651,8 +2626,8 @@ App.onPageInit('asset.playback', function (page) {
             if (Array.isArray(displayValues) && displayValues.length === 0) {
                 displayValues[0] = moment().format('MMMM');
             }
-            else if(parseInt(displayValues[0]) >= 0){
-                displayValues[0] = MONTHS[parseInt(displayValues[0])];
+			else if(parseInt(displayValues[0]) >= 0){
+            	displayValues[0] = MONTHS[parseInt(displayValues[0])];
             }
             return displayValues[0] + ' ' + values[1] + ', ' + values[2];
         },
@@ -2802,8 +2777,7 @@ App.onPageInit('asset.location', function (page) {
     });
 });
 
-App.onPageInit('asset.track', function (page) {   
-    $(page.container).find('input[name="Geofence"]').checkRadioTweak();  
+App.onPageInit('asset.track', function (page) {     
     showMap();
 
     var posTime = $$(page.container).find('.position_time');
@@ -2841,6 +2815,7 @@ App.onPageInit('asset.track', function (page) {
     });
 
     trackTimer = setInterval(function(){
+    		//console.log('trackTimer');
                 updateMarkerPositionTrack(data);
             }, 10000);  
 
@@ -2860,18 +2835,9 @@ App.onPageInit('asset.track', function (page) {
             window.PosMarker[TargetAsset.ASSET_IMEI+'-geofence'] = false;
         }
     });*/
-    var geofenceTitles = $$(page.container).find('.geofenceSetList .item-title');
+
     var geofence = $$(page.container).find('input[name="Geofence"]');
-    
-
-    geofenceTitles.on('click touch', function(){
-        var radio = $$(this).siblings('.check-radio-tweak-wrapper');       
-        if (radio.length) {
-            radio.click();
-        }
-    });
-
-    geofence.on('change', function(){ 
+    geofence.on('change', function(){   
         var latlng = window.PosMarker[TargetAsset.ASSET_IMEI].getLatLng();   
         changeAssetGeoFenceSate({
             id: TargetAsset.ASSET_ID, 
@@ -2884,7 +2850,7 @@ App.onPageInit('asset.track', function (page) {
             address: latlng.toString(),
         });
         if (strToBool(this.value)) {                    
-            window.PosMarker[TargetAsset.ASSET_IMEI+'-geofence'] = L.circle([latlng.lat, latlng.lng], {radius: 100,color: 'red',fillColor: '#f03',fillOpacity: 0.2,});    
+            window.PosMarker[TargetAsset.ASSET_IMEI+'-geofence'] = L.circle([latlng.lat, latlng.lng], {radius: 100,color: 'red',fillColor: '#f03',fillOpacity: 0.1,});    
             window.PosMarker[TargetAsset.ASSET_IMEI+'-geofence'].addTo(MapTrack);         
         }else{
             if (window.PosMarker[TargetAsset.ASSET_IMEI+'-geofence']) {
@@ -2899,6 +2865,7 @@ App.onPageInit('asset.track', function (page) {
 
 
 App.onPageBeforeRemove('asset.track', function(page){
+	//console.log('here');
     clearInterval(trackTimer);
     trackTimer = false;
 });
@@ -2956,6 +2923,7 @@ App.onPageInit('asset.playback.show', function (page) {
             playbackTimer = setInterval(playbackIntrvalFunc, interval);            
         }
     }); 
+
 
     $$('.menuRoutes').on('click', function() {
         var buttons = [{
@@ -3442,20 +3410,27 @@ function loadPageTheftReport() {
 
     var href = API_URL.URL_REPORT_THEFT.format(param.loginName, param.imei, param.make, param.model, param.registration);
 
-     window.open(href, '_blank', 'location=yes');
+    if (typeof navigator !== "undefined" && navigator.app) {
+        //plus.runtime.openURL(href); 
+        navigator.app.loadUrl(href, { openExternal: true });
+    } else {
+        window.open(href, '_blank');
+    }
 }
 
-function loadPageSupport(){
-    var userInfo = getUserinfo().User;  
+
+
+function loadPageSupport() {
+    var userInfo = getUserinfo().User;
 
     var param = {
         'name': '',
-        'loginName':'',
-        'email':'',
-        'phone':'',
-        'service':AppDetails.supportCode, //means quikloc8.co in support page
+        'loginName': '',
+        'email': '',
+        'phone': '',
+        'service': AppDetails.supportCode, //means quikloc8.co in support page
     };
-    
+
     if (userInfo.FirstName) {
         param.name = userInfo.FirstName.trim();
     }
@@ -3474,19 +3449,19 @@ function loadPageSupport(){
     if (userInfo.Mobile) {
         param.phone = userInfo.Mobile.trim();
         param.phone = encodeURIComponent(param.phone);
-    }    
+    }
     if (param.name) {
         param.name = encodeURIComponent(param.name);
     }
-  
-    var href = API_URL.URL_SUPPORT.format(param.name,param.loginName,param.email,param.phone,param.service); 
-    
-    /*if (typeof navigator !== "undefined" && navigator.app) {                
-        navigator.app.loadUrl(href, {openExternal: true}); 
+
+    var href = API_URL.URL_SUPPORT.format(param.name, param.loginName, param.email, param.phone, param.service);
+
+    if (typeof navigator !== "undefined" && navigator.app) {
+        //plus.runtime.openURL(href); 
+        navigator.app.loadUrl(href, { openExternal: true });
     } else {
-        window.open(href,'_blank');
-    }*/
-    window.open(href, '_blank', 'location=yes');
+        window.open(href, '_blank');
+    }
 }
 
 function loadResetPwdPage(){
@@ -3531,7 +3506,7 @@ function getAssetImg(params, imgFor){
     if (params && imgFor.assetList) {
         var pattern = /^IMEI_/i;   
         if (params.Icon && pattern.test(params.Icon)) {
-            assetImg = '<img class="item_asset_img" src="http://upload.quiktrak.co/Attachment/images/'+params.Icon+'?'+ new Date().getTime()+'" alt="">';
+            assetImg = '<img class="item_asset_img" src="http://upload.quiktrak.co/Attachment/images/'+params.Icon+'?v='+ new Date().getTime()+'" alt="">';
         }else if (params.Name) {
             params.Name = $.trim(params.Name);
             var splitted = params.Name.split(' ');                
@@ -3625,9 +3600,10 @@ function showMap(params){
 }
 
 function showMapPlayback(){
-    var optimizedState = $$('body .playback_page').find('input[name="optimizedState"]');
+	var optimizedState = $$('body .playback_page').find('input[name="optimizedState"]');
     var asset = TargetAsset.ASSET_IMEI;   
     var latlng = [POSINFOASSETLIST[asset].posInfo.lat, POSINFOASSETLIST[asset].posInfo.lng];
+
     MapTrack = Protocol.Helper.createMap({ target: 'map', latLng: latlng, zoom: 15 }); 
     window.PosMarker[asset].addTo(MapTrack);
 
@@ -3679,7 +3655,7 @@ function showMapPlayback(){
     });
 
     
-   var polylineCustomization = {
+     var polylineCustomization = {
         'mainBg': {
             color: '#6199CC',
             weight: 6,
@@ -3859,7 +3835,7 @@ function updateGeofenceMarkerGroup(assets, geofenceEdit){
             point = ''; 
             markerData = '';
             if (POSINFOASSETLIST[value] && POSINFOASSETLIST[value].posInfo && POSINFOASSETLIST[value].posInfo.lat !== 0 && POSINFOASSETLIST[value].posInfo.lng !== 0) {               
-                point = L.marker([POSINFOASSETLIST[value].posInfo.lat,POSINFOASSETLIST[value].posInfo.lng], {icon: Protocol.MarkerIcon[1]}); 
+                point = L.marker([POSINFOASSETLIST[value].posInfo.lat,POSINFOASSETLIST[value].posInfo.lng], {icon: Protocol.MarkerIcon[0]}); 
                 markerData = POSINFOASSETLIST[value].Name ? POSINFOASSETLIST[value].Name : POSINFOASSETLIST[value].IMEI;
                 point.bindPopup(markerData,{"maxWidth":260});
                 point.addTo(geofenceMarkerGroup);
@@ -3883,7 +3859,7 @@ function updateGeofenceMarkerGroup(assets, geofenceEdit){
 function updateGeofenceAddress(latlng){
     var container = $$('body');
     if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
-    App.showProgressbar(container);
+    App.showProgressbar(container); 
     Protocol.Helper.getAddressByGeocoder(latlng,function(address){
         $$('body [name="geofenceAddress"]').val(address);
         App.hideProgressbar(); 
@@ -3991,7 +3967,6 @@ function loadStatusPage(){
             assetStats.temperature = assetFeaturesStatus.temperature.value;
         }
         if (assetFeaturesStatus.stopped) {
-            //console.log(assetFeaturesStatus.stopped);
             assetStats.stoppedDuration = assetFeaturesStatus.stopped.duration;
         } 
         /*if (assetFeaturesStatus.geolock) {
@@ -4080,7 +4055,7 @@ function changeGeolockState(params){
 
         var container = $$('body');
         if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
-        App.showProgressbar(container);
+        App.showProgressbar(container);  
         JSON1.request(url, function(result){ 
                 console.log(result);                  
                 if (result.MajorCode == '000') {
@@ -4223,7 +4198,8 @@ function getAlertConfig() {
     });
 }
 
-function loadAlarmPage(params){
+function loadAlarmPage(params) {
+
     var assetList = getAssetList();
     var assetAlarmVal = assetList[TargetAsset.ASSET_IMEI].AlarmOptions;
 
@@ -4450,79 +4426,6 @@ function loadAlarmPage(params){
     });
 }
 
-/*function loadAlarmPage(){
-    var assetList = getAssetList();    
-    var assetAlarmVal = assetList[TargetAsset.ASSET_IMEI].AlarmOptions;
-    
-    var alarms = {
-        bilge: {
-            state: true,
-            val: 131072,
-        },
-        input1Low: {
-            state: true,
-            val: 524288,
-        },
-        lowBattery: {
-            state: true,
-            val: 512,
-        },      
-        
-        geolock:{
-            state: true,
-            //val: 1024,
-            val: 1048,
-        },
-        accOff: {
-            state: true,
-            val: 65536,
-        },
-        accOn: {
-            state: true,
-            val: 32768,
-        },        
-       
-        power: {
-            state: true,
-            val: 4,
-        },        
-        alarm: {
-            state: true,
-            //val: 0,
-        },
-    };
-    
-    
-
-    if (assetAlarmVal) {
-        $.each( alarms, function ( key, value ) {            
-            if (assetAlarmVal & value.val) {                
-                alarms[key].state = false;
-            }            
-        });       
-        
-    }
-
-   
-
-    mainView.router.load({
-        url:'resources/templates/asset.alarm.html',
-        context:{
-            Name: POSINFOASSETLIST[TargetAsset.ASSET_IMEI].Name,            
-            //alarm: alarms.alarm.state,
-            bilge: alarms.bilge.state,
-            input1Low: alarms.input1Low.state,
-            lowBattery: alarms.lowBattery.state,
-            //geofenceIn: alarms.geofenceIn.state,
-            geolock: alarms.geolock.state,            
-            accOff: alarms.accOff.state,
-            accOn: alarms.accOn.state,
-            //geofenceOut: alarms.geofenceOut.state,
-            power: alarms.power.state,            
-        }
-    });
-}*/
-
 function loadPlaybackPage(){
 	var asset = POSINFOASSETLIST[TargetAsset.ASSET_IMEI];
 
@@ -4568,13 +4471,13 @@ function getMarkerDataTable(asset, positionDetails){
         markerData +=   '<tr>';
         markerData +=       '<td class="marker-data-caption">'+LANGUAGE.ASSET_TRACK_MSG02+'</td>';
         markerData +=       '<td class="marker-data-value">'+positionDetails.speed+'</td>';
-        markerData +=   '</tr>';    
+        markerData +=   '</tr>';   
             if (positionDetails.showSpeedLimit) {
         markerData +=   '<tr>';
         markerData +=       '<td class="marker-data-caption">'+LANGUAGE.COM_MSG54+'</td>';
         markerData +=       '<td class="marker-data-value">'+positionDetails.speedlimit+'</td>';
         markerData +=   '</tr>';   
-            }                            
+            }                         
         markerData +=   '<tr>';
         markerData +=       '<td class="marker-data-caption">'+LANGUAGE.ASSET_TRACK_MSG01+'</td>';
         markerData +=       '<td class="marker-data-value">'+positionDetails.direction+'</td>';
@@ -4789,13 +4692,14 @@ function loadTrackPage(params){
         customAddress: '',
         status: '',
         //geolockState: '',
-        geofenceState: '',        
+        geofenceState: '',  
 
         alertType: '',
         showSpeedLimit: '',
         speedlimit: LANGUAGE.COM_MSG08,
         speedUnitCode: '',
-        speedingType: 1, 
+        speedingType: 1,      
+
     };
 //{"title":"Acc off","type":65536,"imei":"0352544073967920","name":"Landcruiser Perth","lat":-32.032898333333335,"lng":115.86817722222216,"speed":0,"direct":0,"time":"2018-04-13 10:16:51"}
     if ((params && parseFloat(params.lat) !== 0 && parseFloat(params.lng) !== 0) || (parseFloat(asset.posInfo.lat) !== 0 && parseFloat(asset.posInfo.lng) !== 0) ){     
@@ -4810,7 +4714,7 @@ function loadTrackPage(params){
             details.latlng.lng = params.lng;
             details.name = params.name;
             details.time = params.time;
-            details.direct = parseInt(params.direct);     
+            details.direct = parseInt(params.direct); 
             details.alertType = params.type;
 
             if (params.type && params.type == '32') {  //32 is speeding alert
@@ -4819,14 +4723,14 @@ function loadTrackPage(params){
                     details.speedingType = parseInt(asset.MaxSpeedAlertMode,10); 
                     details.speedlimit = Protocol.Helper.getSpeedValue(asset.Unit, asset.MaxSpeed) + ' ' + Protocol.Helper.getSpeedUnit(asset.Unit);
                 }                
-            }                
+            }          
             
         }else{  
             var assetFeaturesStatus = Protocol.Helper.getAssetStateInfo(asset);           
 
             if (typeof asset.Unit !== "undefined" && typeof asset.posInfo.speed !== "undefined") {
                 details.speed = Protocol.Helper.getSpeedValue(asset.Unit, asset.posInfo.speed) + ' ' + Protocol.Helper.getSpeedUnit(asset.Unit);
-                 details.speedUnitCode = asset.Unit;
+                details.speedUnitCode = asset.Unit;
             }        
             if (typeof asset.Unit !== "undefined" && typeof asset.posInfo.mileage !== "undefined" && asset.posInfo.mileage != '-') {
                 details.mileage = (Protocol.Helper.getMileageValue(asset.Unit, asset.posInfo.mileage) + parseInt(asset.InitMileage) + parseInt(asset._FIELD_FLOAT7)) + '&nbsp;' + Protocol.Helper.getMileageUnit(asset.Unit);
@@ -4864,7 +4768,7 @@ function loadTrackPage(params){
         details.coords = 'GPS: ' + Protocol.Helper.convertDMS(details.latlng.lat, details.latlng.lng);
 
         var markerData = getMarkerDataTable(asset, details);
-        window.PosMarker[TargetAsset.ASSET_IMEI] = L.marker([details.latlng.lat, details.latlng.lng], {icon: Protocol.MarkerIcon[0]});
+        window.PosMarker[TargetAsset.ASSET_IMEI] = L.marker([details.latlng.lat, details.latlng.lng], {icon: Protocol.MarkerIcon[0]}); 
         window.PosMarker[TargetAsset.ASSET_IMEI].setLatLng([details.latlng.lat, details.latlng.lng]); 
         window.PosMarker[TargetAsset.ASSET_IMEI].bindPopup(markerData,{"maxWidth":260});
 
@@ -4904,31 +4808,31 @@ function loadTrackPage(params){
         });
 
         if (details.alertType && details.alertType == 32 && details.speedingType == 1) {      
-            $.ajax({
-                type: "GET",
-                url: API_URL.URL_GET_SPEEDLIMIT.format(details.latlng.lat, details.latlng.lng),
-                data: {},
-                async: true,
-                crossDomain: true,
-                cache: false,
-                success: function(result) {
-                   //console.log(result);   
-                    if (result && result.max) {
-                        
-                        var speed = Protocol.Helper.getSpeedValue(details.speedUnitCode, parseInt(result.max));
-                        
-                        var speedUnit = Protocol.Helper.getSpeedUnit(details.speedUnitCode);
-                        //speedLimitEl.html(parseInt(speed) + ' '+ speedUnit);
-                        details.speedlimit = parseInt(speed) + ' '+ speedUnit; 
-                        var newMarkerData = getMarkerDataTable(asset, details);
-                        window.PosMarker[TargetAsset.ASSET_IMEI].setPopupContent(newMarkerData);
-                    }
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                   console.log('womething wrong')
-                }
-            });
-        }
+	    	$.ajax({
+		        type: "GET",
+		        url: API_URL.URL_GET_SPEEDLIMIT.format(details.latlng.lat, details.latlng.lng),
+		        data: {},
+		        async: true,
+		        crossDomain: true,
+		        cache: false,
+		        success: function(result) {
+		           //console.log(result);	
+		           	if (result && result.max) {
+		           		
+		           		var speed = Protocol.Helper.getSpeedValue(details.speedUnitCode, parseInt(result.max));
+		           		
+	                    var speedUnit = Protocol.Helper.getSpeedUnit(details.speedUnitCode);
+		           		//speedLimitEl.html(parseInt(speed) + ' '+ speedUnit);
+		           		details.speedlimit = parseInt(speed) + ' '+ speedUnit; 
+			            var newMarkerData = getMarkerDataTable(asset, details);
+			            window.PosMarker[TargetAsset.ASSET_IMEI].setPopupContent(newMarkerData);
+		           	}
+		        },
+		        error: function(XMLHttpRequest, textStatus, errorThrown) {
+		           console.log('womething wrong')
+		        }
+		    });
+	    }
         
     }else{
         App.alert(LANGUAGE.PROMPT_MSG004);
@@ -5049,6 +4953,7 @@ function updateAssetData(parameters){
 }
 
 function updateMarkerPositionTrack(data){
+	//console.log('updateMarkerPositionTrack');
         var asset = POSINFOASSETLIST[TargetAsset.ASSET_IMEI];
         
         if (asset) {
@@ -5190,7 +5095,7 @@ function getHisPosArray(from, to){
 
                                         
                     var markerData = getMarkerDataTablePB(asset, point);
-                    window.PosMarker[TargetAsset.ASSET_IMEI] = L.marker([latlng.lat, latlng.lng], {icon: Protocol.MarkerIcon[0]});
+                    window.PosMarker[TargetAsset.ASSET_IMEI] = L.marker([latlng.lat, latlng.lng], {icon: Protocol.MarkerIcon[0]}); 
                     window.PosMarker[TargetAsset.ASSET_IMEI].setLatLng([latlng.lat, latlng.lng]);
                     window.PosMarker[TargetAsset.ASSET_IMEI].bindPopup(markerData,{"autoPan":false,"maxWidth":260});
                     POSINFOASSETLIST[TargetAsset.ASSET_IMEI].posInfo.lat = latlng.lat;
@@ -5817,7 +5722,7 @@ function getNewNotifications(params){
     if (MinorToken && deviceToken) {
         var container = $$('body');
         if (container.children('.progressbar, .progressbar-infinite').length) return; //don't run all this if there is a current progressbar loading
-        App.showProgressbar(container);
+        App.showProgressbar(container); 
 
         var url = API_URL.URL_GET_NEW_NOTIFICATIONS.format(MinorToken,deviceToken); 
         notificationChecked = 0;
@@ -6277,7 +6182,7 @@ function saveGeofence(url, params){
               cache: false,
         crossDomain: true,                             
             success: function (result) { 
-                console.log(result);
+                //console.log(result);
                 App.hidePreloader();  
                 if (result.MajorCode == '000') {
                     //setGeoFenceList(result.Data);      
@@ -6360,14 +6265,14 @@ function showCustomMessage(params){
 }
 
 function showUserGuide(){
-
-    /*if (typeof navigator !== "undefined" && navigator.app) {                
+    var href = API_URL.URL_USERGUIDE;
+    if (typeof navigator !== "undefined" && navigator.app) {                
         navigator.app.loadUrl(href, {openExternal: true}); 
     } else {
         window.open(href,'_blank');
-    }*/
-    window.open(API_URL.URL_USERGUIDE, '_blank', 'location=yes');
+    }
 }
+
 
 
 /* ASSET EDIT PHOTO */
