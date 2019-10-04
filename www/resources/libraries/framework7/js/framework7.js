@@ -12,6 +12,7 @@
  * 
  * Released on: November 8, 2016
  */
+
 (function () {
 
     'use strict';
